@@ -332,7 +332,7 @@ function DominanceAltseason() {
 function DirectionalSentimentIndex() {
   const [symbol, setSymbol] = useState<string>("BTCUSDT");
   const symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT"] as const;
-  const period = "5m";
+  const period = "1h";
 
   const [dataMap, setDataMap] = useState<Record<string, { longPct: number; shortPct: number; ratio: number | null }>>({});
 
@@ -364,7 +364,7 @@ function DirectionalSentimentIndex() {
     };
 
     loadAll();
-    const t = setInterval(loadAll, 5 * 60 * 1000);
+    const t = setInterval(loadAll, 60 * 60 * 1000);
     return () => { mounted = false; controller.abort(); clearInterval(t); };
   }, []);
 
