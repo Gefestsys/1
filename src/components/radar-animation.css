@@ -1,0 +1,38 @@
+@keyframes radar-sweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dot-visibility {
+  0% {
+    opacity: 0;
+    r: 4;
+  }
+  10% {
+    opacity: 1;
+    r: 6;
+    filter: drop-shadow(0 0 8px #10b981);
+  }
+  17% {
+    opacity: 0;
+    r: 4;
+  }
+  100% {
+    opacity: 0;
+    r: 4;
+  }
+}
+
+.radar-sweep-line {
+  animation: radar-sweep 6s linear infinite;
+  transform-origin: 50% 100%;
+}
+
+.radar-dot-animated {
+  animation: dot-visibility 6s linear infinite;
+  animation-delay: var(--animation-delay, 0s);
+}

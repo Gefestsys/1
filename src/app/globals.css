@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+:root {
+  --background: rgba(0, 0, 0, 1);
+  --foreground: rgba(250, 250, 250, 1);
+  --primary: rgba(24, 24, 27, 1);
+  --primary-foreground: rgba(250, 250, 250, 1);
+  --muted-foreground: rgba(161, 161, 170, 1);
+  --input: rgba(250, 250, 250, 0.2);
+  --accent: rgba(250, 250, 250, 0.05);
+  --border-radius-rounded: 4px;
+  --border-radius-rounded-md: 6px;
+  --spacing-1: 0;
+  --spacing-2: 8px;
+  --spacing-4: 16px;
+  --spacing-8: 32px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-input: var(--input);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* LaserFlow image reveal helper */
+.laser-reveal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  object-fit: cover;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(
+    circle at var(--mx, -9999px) var(--my, -9999px),
+    rgba(255,255,255,1) 0px,
+    rgba(255,255,255,0.95) 60px,
+    rgba(255,255,255,0.6) 120px,
+    rgba(255,255,255,0.25) 180px,
+    rgba(255,255,255,0) 240px
+  );
+  mask-image: radial-gradient(
+    circle at var(--mx, -9999px) var(--my, -9999px),
+    rgba(255,255,255,1) 0px,
+    rgba(255,255,255,0.95) 60px,
+    rgba(255,255,255,0.6) 120px,
+    rgba(255,255,255,0.25) 180px,
+    rgba(255,255,255,0) 240px
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Smaller reveal placed under the beam */
+.laser-reveal-small {
+  position: absolute;
+  width: 65%;
+  height: auto;
+  bottom: 27%;
+  left: 50%;
+  transform: translateX(-50%);
+  object-fit: contain;
+  mix-blend-mode: screen;
+  opacity: 0.25;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(
+    circle at var(--mx, -9999px) var(--my, -9999px),
+    rgba(255,255,255,1) 0px,
+    rgba(255,255,255,0.95) 40px,
+    rgba(255,255,255,0.6) 90px,
+    rgba(255,255,255,0.25) 140px,
+    rgba(255,255,255,0) 190px
+  );
+  mask-image: radial-gradient(
+    circle at var(--mx, -9999px) var(--my, -9999px),
+    rgba(255,255,255,1) 0px,
+    rgba(255,255,255,0.95) 40px,
+    rgba(255,255,255,0.6) 90px,
+    rgba(255,255,255,0.25) 140px,
+    rgba(255,255,255,0) 190px
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.laser-canvas { transition: opacity 180ms linear; }
+
+/* Display title glow effect used for prominent section headings */
+.section-title-glow {
+  text-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* Card typography utilities
+   - card-title-font: same font family/weight as Features heading but without shadow
+   - card-body-font: same font family as the features subheading
+   Size of fonts in cards is preserved via Tailwind utility classes in the JSX. */
+.card-title-font {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-shadow: none;
+}
+.card-body-font {
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+
+/* Bento card centered green glow */
+.bento-glow {
+  /* Centered square background positioned behind content; slightly larger than the card so it can host map visuals without clipping */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 240%;
+  height: 200%;
+  transform: translate(-50%, -50%);
+
+  background: radial-gradient(circle closest-side, rgba(16,185,129,0.22) 10%, rgba(16,185,129,0.12) 45%, rgba(16,185,129,0.06) 80%, transparent 75%);
+  filter: blur(28px);
+  border-radius: 0.75rem;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-glow {
+    transition: none;
+    filter: blur(20px);
+  }
+}
+
+/* Progress bar fill with opacity */
+.progress-fill {
+  background-color: rgba(2, 148, 92, 0.7);
+}
+
+/* Progress label vertical offset to align with bars */
+.progress-label {
+  transform: translateY(5px);
+}
+
+/* Carousel helper classes */
+.carousel-slide {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: bottom;
+}
+.carousel-slide.inactive {
+  transform: translateY(6px) rotateX(8deg);
+}
+.carousel-slide.active {
+  transform: scale(1) rotateX(0deg);
+}
+.carousel-parallax {
+  transition: transform 0.15s ease-out;
+  transform: none;
+}
+.carousel-parallax.parallax {
+  transform: translate3d(calc(var(--x) / 30), calc(var(--y) / 30), 0);
+}
+.carousel-list {
+  transition: transform 1s ease-in-out;
+  transform: translateX(calc(var(--offset, 0%)* -1));
+}
+
+/* Carousel content emphasis */
+.carousel-slide { overflow: visible; }
+.carousel-slide.active { z-index: 30; }
+.carousel-slide.inactive { z-index: 10; }
+.carousel-content {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), filter 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+.carousel-slide.active .carousel-content { transform: scale(1.08); }
+.carousel-slide.inactive .carousel-content { transform: scale(1.08); }
+
+/* Subtle custom scrollbar for AI terminal log */
+.ai-terminal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(250, 250, 250, 0.28) transparent;
+}
+.ai-terminal-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.ai-terminal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ai-terminal-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(250, 250, 250, 0.22);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.ai-terminal-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(250, 250, 250, 0.34);
+}
